@@ -18,6 +18,7 @@ const websiteContent = {
         },
         links: [
             { text: "Specialties", url: "#specialties" },
+            { text: "Gallery", url: "#gallery" },
             { text: "Testimonials", url: "#testimonials" }
         ],
         cta: {
@@ -39,14 +40,65 @@ const websiteContent = {
         ]
     },
 
-    // Success Stories Section Configuration
+    // Featured Success Gallery Configuration
+    gallery: {
+        heading: "Client Success Stories",
+        subtext: "Experience the real-life transformations of clients who have regained their strength, mobility, and confidence. Click or drag the card deck on the right to browse their stories.",
+        items: [
+            {
+                image: "assets/images/success/gallery-1.jpg",
+                title: "John C.",
+                description: "“Mollie helped me recover full range of movement in both shoulders. I've gained 25 lbs of solid muscle and feel like a new person.”",
+                tag: "Cancer Survivor",
+                date: "Delray Beach, FL"
+            },
+            {
+                image: "assets/images/success/gallery-2.jpg",
+                title: "Cathy B.",
+                description: "“Arthritis and fibromyalgia made movement painful. Mollie's customized rehab provided relief that years of medication couldn’t.”",
+                tag: "Rehabilitation",
+                date: "Palm Beach, FL"
+            },
+            {
+                image: "assets/images/success/gallery-3.jpg",
+                title: "Benjamin P.",
+                description: "“As an exercise physiologist and firefighter, I can confidently state Mollie possesses outstanding, premium training expertise.”",
+                tag: "Exercise Physiologist",
+                date: "Boynton Beach, FL"
+            },
+            {
+                image: "assets/images/success/gallery-4.jpg",
+                title: "Coach Conroy W.",
+                description: "“Having trained NFL players for over ten years, I can state that Mollie’s rehab and strength knowledge is truly remarkable.”",
+                tag: "Athletic Director",
+                date: "Zion Lutheran"
+            },
+            {
+                image: "assets/images/success/gallery-5.jpg",
+                title: "Judy K.",
+                description: "“Mollie corrected my Forward Head Posture. My neck tension, headaches, and eyeball pressure are completely gone.”",
+                tag: "Posture Correction",
+                date: "Delray Beach, FL"
+            },
+            {
+                image: "assets/images/success/gallery-6.jpg",
+                title: "Jess M.",
+                description: "“Sustainable lifestyle and strength changes made a lasting impact. I didn't just lose weight—I became stronger and more confident.”",
+                tag: "Strength & Lifestyle",
+                date: "Palm Beach, FL"
+            }
+        ]
+    },
+
+    // Success Stories Section Configuration (used by renderPrinciples)
     successStories: {
         images: [
             "assets/images/success/gallery-1.jpg",
             "assets/images/success/gallery-2.jpg",
             "assets/images/success/gallery-3.jpg",
             "assets/images/success/gallery-4.jpg",
-            "assets/images/success/gallery-5.jpg"
+            "assets/images/success/gallery-5.jpg",
+            "assets/images/success/gallery-6.jpg"
         ]
     },
 
@@ -876,6 +928,312 @@ function renderTestimonials() {
 }
 
 /**
+ * Renders the Interactive Success Gallery Stack Section inside #main-content
+ */
+function renderGallery() {
+    const mainContent = document.getElementById("main-content");
+    if (!mainContent) return;
+
+    const data = websiteContent.gallery;
+    if (!data) return;
+
+    const section = document.createElement("section");
+    section.className = "gallery-grid-section";
+    section.id = "gallery";
+
+    const container = document.createElement("div");
+    container.className = "container";
+
+    const stackContainerDiv = document.createElement("div");
+    stackContainerDiv.className = "stack-gallery-container";
+
+    // Left Column: Text & Dynamic Quote Panel
+    const textColumn = document.createElement("div");
+    textColumn.className = "gallery-text-column";
+
+    const sectionHeader = document.createElement("div");
+    sectionHeader.className = "section-header animate-fade-in";
+
+    const heading = document.createElement("h2");
+    heading.textContent = data.heading;
+    sectionHeader.appendChild(heading);
+
+    const subtext = document.createElement("p");
+    subtext.className = "section-subtext";
+    subtext.textContent = data.subtext;
+    sectionHeader.appendChild(subtext);
+
+    textColumn.appendChild(sectionHeader);
+
+    // Active Quote Display Card
+    const quoteCard = document.createElement("div");
+    quoteCard.className = "gallery-quote-card animate-fade-in";
+    quoteCard.style.animationDelay = "0.15s";
+
+    const quoteDisplay = document.createElement("div");
+    quoteDisplay.className = "quote-display";
+
+    const quoteText = document.createElement("p");
+    quoteText.className = "gallery-quote-text";
+    quoteDisplay.appendChild(quoteText);
+
+    const quoteAuthor = document.createElement("div");
+    quoteAuthor.className = "gallery-quote-author";
+
+    const quoteName = document.createElement("span");
+    quoteName.className = "gallery-quote-name";
+    quoteAuthor.appendChild(quoteName);
+
+    const quoteMeta = document.createElement("span");
+    quoteMeta.className = "gallery-quote-meta";
+    quoteAuthor.appendChild(quoteMeta);
+
+    quoteDisplay.appendChild(quoteAuthor);
+    quoteCard.appendChild(quoteDisplay);
+    textColumn.appendChild(quoteCard);
+
+    // Right Column: Card Stack Container
+    const stackColumn = document.createElement("div");
+    stackColumn.className = "gallery-stack-column animate-fade-in";
+    stackColumn.style.animationDelay = "0.3s";
+
+    const stackContainer = document.createElement("div");
+    stackContainer.className = "stack-container";
+
+    // Render cards backwards so the first item in array (index 0) is appended last (visual top)
+    const reversedItems = [...data.items].reverse();
+    reversedItems.forEach((item, index) => {
+        const originalIndex = data.items.length - index - 1;
+        const wrapper = document.createElement("div");
+        wrapper.className = "card-rotate-wrapper";
+        wrapper.dataset.index = originalIndex;
+
+        const card = document.createElement("div");
+        card.className = "stack-card";
+
+        const img = document.createElement("img");
+        img.src = item.image;
+        img.alt = `Success story of ${item.title}`;
+        img.loading = "lazy";
+        
+        card.appendChild(img);
+        wrapper.appendChild(card);
+        stackContainer.appendChild(wrapper);
+    });
+
+    stackColumn.appendChild(stackContainer);
+    
+    stackContainerDiv.appendChild(textColumn);
+    stackContainerDiv.appendChild(stackColumn);
+
+    container.appendChild(stackContainerDiv);
+    section.appendChild(container);
+    mainContent.appendChild(section);
+}
+
+/**
+ * Initializes Card Stack dragging, click-to-cycle, and 3D tilts in Vanilla JS
+ */
+function initGalleryStack() {
+    const stackContainer = document.querySelector('.stack-container');
+    if (!stackContainer) return;
+
+    // Retrieve cards and sort them by originalIndex (0 = John C., 5 = Jess M.)
+    const cards = Array.from(stackContainer.querySelectorAll('.card-rotate-wrapper'))
+        .sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index));
+    
+    if (cards.length === 0) return;
+
+    const totalCards = cards.length;
+    
+    // Stack state array: index visual position. cardsOrder[0] is bottom, cardsOrder[5] is top.
+    // Initialize cardsOrder to matches index mapping [0, 1, 2, 3, 4, 5]
+    let cardsOrder = cards.map((_, i) => i);
+    const sensitivity = 140; // Drag threshold to send to back
+    const sendToBackOnClick = true;
+
+    // Pre-calculate organic Z-rotation values for visual aesthetics
+    const randomRotations = cards.map((_, i) => (i * 2.5) - 6); // slight stair rotation
+
+    function updateCardLayouts() {
+        cardsOrder.forEach((cardIdx, visualPos) => {
+            const cardEl = cards[cardIdx];
+            if (!cardEl) return;
+
+            // Z-index: higher visualPos gets higher Z-index layering
+            cardEl.style.zIndex = visualPos;
+
+            // Depth index: top card is 0, below card is 1, etc.
+            const depth = totalCards - visualPos - 1;
+
+            // React Bits scale and rotation calculations
+            const scale = 1 - depth * 0.05;
+            const rotationZ = depth * 4 + randomRotations[cardIdx];
+
+            // If this card is not actively being dragged, snap to baseline stack layout
+            if (!cardEl.classList.contains('dragging')) {
+                cardEl.style.transform = `translate3d(0, 0, 0) scale(${scale}) rotateZ(${rotationZ}deg)`;
+                
+                const cardInner = cardEl.querySelector('.stack-card');
+                if (cardInner) {
+                    cardInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                }
+                
+                // Add soft focal blur to deep layers for professional depth of field
+                cardEl.style.filter = depth > 2 ? 'blur(1.5px)' : 'none';
+            }
+        });
+
+        // Sync left side description quote panel with the top card index
+        const topCardIdx = cardsOrder[totalCards - 1];
+        updateQuotePanel(topCardIdx);
+    }
+
+    let lastActiveIdx = -1;
+    function updateQuotePanel(activeIdx) {
+        if (activeIdx === lastActiveIdx) return;
+        lastActiveIdx = activeIdx;
+
+        const quoteTextEl = document.querySelector('.gallery-quote-text');
+        const quoteNameEl = document.querySelector('.gallery-quote-name');
+        const quoteMetaEl = document.querySelector('.gallery-quote-meta');
+        const quoteDisplay = document.querySelector('.quote-display');
+
+        if (!quoteTextEl || !quoteDisplay) return;
+
+        const item = websiteContent.gallery.items[activeIdx];
+        if (!item) return;
+
+        // Visual fade out
+        quoteDisplay.classList.add('fade-out');
+
+        // Swap details after transition completes
+        setTimeout(() => {
+            quoteTextEl.textContent = item.description;
+            quoteNameEl.textContent = item.title;
+            quoteMetaEl.textContent = `${item.tag} • ${item.date}`;
+
+            // Visual fade in
+            quoteDisplay.classList.remove('fade-out');
+        }, 300);
+    }
+
+    function sendToBack(cardIdx) {
+        const pos = cardsOrder.indexOf(cardIdx);
+        if (pos > -1) {
+            // Remove from current position and shift to bottom
+            const [movedIdx] = cardsOrder.splice(pos, 1);
+            cardsOrder.unshift(movedIdx);
+            updateCardLayouts();
+        }
+    }
+
+    // Attach dragging physics listeners to each card wrapper
+    cards.forEach((cardEl, idx) => {
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        let hasMoved = false;
+
+        function handlePointerDown(e) {
+            // Only allow interactions on the top card of the stack
+            const topCardIdx = cardsOrder[totalCards - 1];
+            if (idx !== topCardIdx) return;
+
+            isDragging = true;
+            hasMoved = false;
+            startX = e.clientX || (e.touches && e.touches[0].clientX);
+            startY = e.clientY || (e.touches && e.touches[0].clientY);
+            dragOffset = { x: 0, y: 0 };
+
+            cardEl.classList.add('dragging');
+            e.preventDefault();
+        }
+
+        function handlePointerMove(e) {
+            if (!isDragging) return;
+
+            const currentX = e.clientX || (e.touches && e.touches[0].clientX);
+            const currentY = e.clientY || (e.touches && e.touches[0].clientY);
+
+            dragOffset.x = currentX - startX;
+            dragOffset.y = currentY - startY;
+
+            if (Math.abs(dragOffset.x) > 6 || Math.abs(dragOffset.y) > 6) {
+                hasMoved = true;
+            }
+
+            // Tilt calculations based on drag offsets (3D visual response)
+            const rotateX = Math.min(Math.max(-(dragOffset.y / 8), -35), 35);
+            const rotateY = Math.min(Math.max((dragOffset.x / 8), -35), 35);
+
+            cardEl.style.transform = `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0) scale(1) rotateZ(${randomRotations[idx]}deg)`;
+            
+            const cardInner = cardEl.querySelector('.stack-card');
+            if (cardInner) {
+                cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            }
+        }
+
+        function handlePointerUp() {
+            if (!isDragging) return;
+            isDragging = false;
+            cardEl.classList.remove('dragging');
+
+            const totalDragDist = Math.sqrt(dragOffset.x * dragOffset.x + dragOffset.y * dragOffset.y);
+
+            if (totalDragDist > sensitivity) {
+                // Drag dismiss: throw element off screen
+                cardEl.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
+                
+                const angle = Math.atan2(dragOffset.y, dragOffset.x);
+                const throwDist = 380;
+                const throwX = Math.cos(angle) * throwDist;
+                const throwY = Math.sin(angle) * throwDist;
+
+                cardEl.style.transform = `translate3d(${throwX}px, ${throwY}px, 0) scale(0.85) rotateZ(${randomRotations[idx] * 2}deg)`;
+
+                // Send to bottom and restore stack order
+                setTimeout(() => {
+                    cardEl.style.transition = '';
+                    sendToBack(idx);
+                }, 300);
+            } else {
+                // If clicked/tapped without drag, cycle instantly
+                if (!hasMoved && sendToBackOnClick) {
+                    sendToBack(idx);
+                } else {
+                    // Snap back to stack position
+                    cardEl.style.transform = `translate3d(0, 0, 0) scale(1) rotateZ(${randomRotations[idx]}deg)`;
+                    
+                    const cardInner = cardEl.querySelector('.stack-card');
+                    if (cardInner) {
+                        cardInner.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        cardInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                        setTimeout(() => {
+                            cardInner.style.transition = '';
+                        }, 400);
+                    }
+                }
+            }
+        }
+
+        // Mouse Events
+        cardEl.addEventListener('mousedown', handlePointerDown);
+        window.addEventListener('mousemove', handlePointerMove);
+        window.addEventListener('mouseup', handlePointerUp);
+
+        // Touch Events
+        cardEl.addEventListener('touchstart', handlePointerDown, { passive: false });
+        window.addEventListener('touchmove', handlePointerMove, { passive: false });
+        window.addEventListener('touchend', handlePointerUp);
+    });
+
+    updateCardLayouts();
+}
+
+/**
  * Renders the Bio Accent Summary (Mollie's Practice & Principles) - Migrated from Mission Page
  */
 function renderPrinciples() {
@@ -1285,6 +1643,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderNavigation();
     renderHero();
     renderSpecialties();
+    renderGallery();
     renderTestimonials();
     renderLeaves();
     renderFooter();
@@ -1292,6 +1651,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Bind event animations
     initLeafScrollAnimation();
     initScrollStack();
+    initGalleryStack();
 
     // 4. Dismiss preloader loading screen once loaded
     const loadStartTime = Date.now();

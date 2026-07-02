@@ -1787,6 +1787,221 @@ html.lenis, html.lenis body {
     }
 }
 
+/* ==========================================================================
+   13. INTERACTIVE STACK GALLERY SECTION
+   ========================================================================== */
+.gallery-grid-section {
+    position: relative;
+    padding: 100px 0 80px;
+    z-index: 2;
+}
+
+.stack-gallery-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto 0;
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    align-items: center;
+}
+
+.gallery-text-column {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.gallery-text-column .section-header {
+    text-align: left;
+    margin: 0;
+}
+
+.gallery-text-column .section-header h2 {
+    margin-bottom: 16px;
+}
+
+.gallery-text-column .section-header .section-subtext {
+    margin-left: 0;
+    max-width: 100%;
+}
+
+.gallery-quote-card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-card);
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(8, 61, 53, 0.04);
+    border: 1px solid rgba(18, 91, 80, 0.05);
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.quote-display {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quote-display.fade-out {
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+.gallery-quote-text {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.gallery-quote-text::before {
+    content: "“";
+    font-family: var(--font-display);
+    font-size: 60px;
+    color: rgba(18, 91, 80, 0.08);
+    position: absolute;
+    top: -30px;
+    left: -20px;
+    line-height: 1;
+}
+
+.gallery-quote-author {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gallery-quote-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--deep-palm);
+}
+
+.gallery-quote-meta {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ocean-teal);
+}
+
+/* Stack Container Side */
+.gallery-stack-column {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stack-container {
+    position: relative;
+    width: 480px;
+    height: 640px;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-rotate-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.card-rotate-wrapper:active {
+    cursor: grabbing;
+}
+
+.card-rotate-wrapper.disabled {
+    cursor: pointer;
+}
+
+.stack-card {
+    border-radius: var(--border-radius-card);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface-color);
+    box-shadow: 0 15px 45px rgba(8, 61, 53, 0.12);
+    border: 1px solid rgba(18, 91, 80, 0.08);
+    box-sizing: border-box;
+    pointer-events: none;
+    
+    /* Custom bounce physics transition */
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                filter 0.6s ease;
+}
+
+.card-rotate-wrapper.dragging .stack-card {
+    transition: none !important;
+}
+
+.stack-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .stack-gallery-container {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .gallery-text-column {
+        width: 100%;
+    }
+
+    .gallery-stack-column {
+        width: 100%;
+    }
+    
+    .gallery-quote-card {
+        padding: 30px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .stack-container {
+        width: 380px;
+        height: 506px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stack-container {
+        width: 300px;
+        height: 400px;
+    }
+}
+
+
 
 
 
