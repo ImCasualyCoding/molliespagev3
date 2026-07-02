@@ -1,0 +1,1792 @@
+/* ==========================================================================
+   MoveRx Main Stylesheet (v2)
+   Description: Premium, mobile-first, and highly-commented design layout
+   ========================================================================== */
+
+/* 1. RESET & BASE ELEMENTS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--deep-palm);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Accessible outline indicators for keyboard navigators */
+a, button, input, textarea {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+}
+
+a:focus-visible, 
+button:focus-visible {
+    outline: 3px solid var(--sun-accent);
+    outline-offset: 4px;
+}
+
+/* Layout Container */
+.container {
+    width: 87.5%;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+/* 2. REUSABLE UI COMPONENTS (Buttons, Badges)
+   ========================================================================== */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--ocean-teal);
+    color: var(--surface-color) !important;
+    border-radius: var(--border-radius-pill);
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 36px;
+    font-size: 15px;
+    border: 2px solid var(--ocean-teal);
+    box-shadow: 0 8px 20px rgba(18, 91, 80, 0.2);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.btn-primary-small {
+    display: inline-block;
+    background-color: var(--ocean-teal);
+    color: var(--surface-color) !important;
+    border-radius: var(--border-radius-pill);
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 12px 24px;
+    font-size: 13px;
+    border: 2px solid var(--ocean-teal);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.btn-primary:hover, 
+.btn-primary-small:hover {
+    background-color: var(--deep-palm);
+    border-color: var(--deep-palm);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(8, 61, 53, 0.28);
+}
+
+.btn-primary:active, 
+.btn-primary-small:active {
+    transform: translateY(0);
+}
+
+/* 3. STICKY NAVIGATION HEADER
+   ========================================================================== */
+.nav-container {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+/* Glassmorphism navigation pill */
+.nav-pill {
+    width: 100%;
+    max-width: 1050px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--nav-shadow);
+    border-radius: var(--border-radius-pill);
+    padding: 12px 24px 12px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--nav-border);
+    transition: background-color var(--transition-smooth), border var(--transition-smooth);
+}
+
+.nav-pill:hover {
+    background: var(--nav-bg-hover);
+    border-color: rgba(18, 91, 80, 0.15);
+}
+
+/* Logo brand styling */
+.logo {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.logo-move {
+    color: var(--ocean-teal);
+    font-style: italic;
+}
+
+.logo-rx {
+    color: var(--sun-accent);
+}
+
+/* Nav Links List */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--deep-palm);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    position: relative;
+    padding: 6px 0;
+    transition: color var(--transition-fast);
+}
+
+/* Premium Gold Underline Animation on Hover */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -1px;
+    left: 0;
+    background-color: var(--sun-accent);
+    transition: width var(--transition-smooth);
+    border-radius: 2px;
+}
+
+.nav-links a:hover {
+    color: var(--ocean-teal);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Mobile Navigation Controls */
+.mobile-only {
+    display: none;
+}
+
+.mobile-toggle-checkbox {
+    display: none;
+}
+
+.mobile-toggle-label {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 6px;
+    padding: 10px 4px;
+    z-index: 1001;
+}
+
+/* Hamburger bars */
+.mobile-toggle-label span {
+    display: block;
+    width: 24px;
+    height: 2.2px;
+    background-color: var(--deep-palm);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                opacity 0.2s ease;
+}
+
+/* Desktop CTA */
+.desktop-only {
+    display: block;
+}
+
+/* 4. HERO SECTION LAYOUT (Full Background Image)
+   ========================================================================== */
+.hero-section {
+    padding: 200px 0 140px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    text-align: center;
+}
+
+/* Background image wrapper with custom opacity */
+.hero-bg-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    opacity: 0.82; /* Increased opacity by another +30% for high image visibility */
+    z-index: -2;
+    transition: opacity 0.5s ease;
+}
+
+/* Linear color gradient legibility mask */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(248, 246, 240, 0.4) 0%,
+        rgba(248, 246, 240, 0.8) 60%,
+        rgba(248, 246, 240, 0.98) 100%
+    );
+    z-index: -1;
+}
+
+/* Ambient background glows (sit between mask and text) */
+.hero-glow-teal {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: min(500px, 80vw);
+    height: min(500px, 80vw);
+    background: rgba(18, 91, 80, 0.12);
+    filter: blur(120px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hero-glow-gold {
+    position: absolute;
+    bottom: 10%;
+    right: -10%;
+    width: min(450px, 70vw);
+    height: min(450px, 70vw);
+    background: rgba(229, 176, 92, 0.12);
+    filter: blur(120px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Centered content wrapper */
+.hero-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px; /* Optimal line length for typography reading */
+    z-index: 2;
+}
+
+.pill-badge {
+    display: inline-block;
+    color: var(--deep-palm);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 8px 24px;
+    border-radius: var(--border-radius-pill);
+    margin-bottom: 24px;
+    background: var(--sun-accent);
+    box-shadow: 0 6px 18px rgba(229, 176, 92, 0.35);
+}
+
+.hero-content-wrapper h1 {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--deep-palm);
+}
+
+.hero-description {
+    font-family: var(--font-body);
+    font-size: clamp(17px, 2.2vw, 20px);
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 44px;
+    max-width: 650px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.btn-secondary {
+    display: inline-block;
+    color: var(--ocean-teal) !important;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 14px 28px;
+    font-size: 13.5px;
+    border-radius: var(--border-radius-pill);
+    border: 2px solid rgba(18, 91, 80, 0.2);
+    background: transparent;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    border-color: var(--ocean-teal);
+    background-color: rgba(18, 91, 80, 0.05);
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* 5. SCROLL-ANIMATED TROPICAL PALM LEAVES
+   ========================================================================== */
+.scroll-leaf-container {
+    position: absolute;
+    width: 300px;
+    height: 450px;
+    z-index: 1; /* Sits below interactive items but above background glows */
+    pointer-events: none; /* Allows click-through interaction */
+    opacity: 0;
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    will-change: transform, opacity;
+}
+
+.leaf-left {
+    left: -140px;
+    transform: translateX(-65px) rotate(10deg);
+    transform-origin: 50% 90%;
+}
+
+.leaf-right {
+    right: -140px;
+    transform: translateX(65px) rotate(-10deg);
+    transform-origin: 50% 90%;
+}
+
+.scroll-leaf-svg {
+    width: 100%;
+    height: 100%;
+    color: var(--ocean-teal);
+    opacity: 0.85;
+    filter: drop-shadow(0 10px 20px rgba(8, 61, 53, 0.08));
+}
+
+/* Override dimensions for specific tropical shapes to avoid text collision */
+.scroll-leaf-container.type-palm {
+    width: 220px;
+    height: 330px;
+}
+
+.scroll-leaf-container.type-sand {
+    width: 240px;
+    height: 160px;
+}
+
+.scroll-leaf-container.type-sand.leaf-left {
+    left: -110px;
+}
+
+/* 5. CLIENT GALLERY SECTION
+   ========================================================================== */
+
+.section-header {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.section-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5.2vw, 48px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--deep-palm);
+}
+
+.section-subtext {
+    font-family: var(--font-body);
+    font-size: clamp(17px, 2.2vw, 21px);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* Showcase layout containing side navigation buttons and card mount */
+.showcase-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: 40px;
+    padding: 20px 0;
+}
+
+.carousel-btn {
+    background: var(--surface-color);
+    color: var(--ocean-teal);
+    border: 2px solid var(--ocean-teal);
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(18, 91, 80, 0.06);
+    transition: var(--transition-smooth);
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+    background: var(--ocean-teal);
+    color: var(--surface-color);
+    transform: scale(1.1);
+    box-shadow: 0 12px 28px rgba(18, 91, 80, 0.2);
+}
+
+.carousel-btn:active {
+    transform: scale(0.95);
+}
+
+/* Stable card mount to prevent page reflows */
+.card-mount {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    min-height: 560px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible; /* Let card swing out of bounds dynamically */
+}
+
+/* The Success Card */
+.success-card {
+    width: 100%;
+    background: var(--surface-color);
+    border-radius: var(--border-radius-card);
+    padding: 20px;
+    box-shadow: 0 20px 50px rgba(8, 61, 53, 0.08);
+    border: 1px solid rgba(18, 91, 80, 0.05);
+    display: flex;
+    flex-direction: column;
+    will-change: transform, opacity;
+}
+
+.success-card:hover {
+    border-color: rgba(18, 91, 80, 0.16);
+    box-shadow: 0 28px 65px rgba(8, 61, 53, 0.13);
+}
+
+.gallery-card-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border-radius: var(--border-radius-img);
+    overflow: hidden;
+    background: var(--bg-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Tactile Fling transition animations */
+.fling-out-left {
+    animation: flingOutLeft 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.fling-out-right {
+    animation: flingOutRight 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.fling-in-left {
+    animation: flingInLeft 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.fling-in-right {
+    animation: flingInRight 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes flingOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) rotate(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-140%) rotate(-15deg) scale(0.9);
+    }
+}
+
+@keyframes flingOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) rotate(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(140%) rotate(15deg) scale(0.9);
+    }
+}
+
+@keyframes flingInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-140%) rotate(-15deg) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) rotate(0) scale(1);
+    }
+}
+
+@keyframes flingInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(140%) rotate(15deg) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) rotate(0) scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .card-mount {
+        min-height: 300px;
+        max-width: 100%;
+    }
+    .success-card {
+        padding: 16px;
+    }
+}
+
+/* 6. VISUAL ANIMATIONS
+   ========================================================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 7. RESPONSIVE MEDIA QUERIES (Mobile and Tablet Layouts)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Scale down and reposition leaves on mobile instead of hiding them */
+    .scroll-leaf-container {
+        width: 150px;
+        height: 225px;
+    }
+    
+    .leaf-left {
+        left: -95px;
+    }
+    
+    .leaf-right {
+        right: -95px;
+    }
+
+    .scroll-leaf-container.type-palm {
+        width: 110px;
+        height: 165px;
+    }
+    
+    .scroll-leaf-container.type-sand {
+        width: 120px;
+        height: 80px;
+    }
+    
+    .scroll-leaf-container.type-sand.leaf-left {
+        left: -75px;
+    }
+}
+
+@media (max-width: 850px) {
+    .mobile-toggle-label {
+        display: flex;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    /* Change navbar pill behavior to support dropdown panel */
+    .nav-pill {
+        padding: 12px 24px;
+        border-radius: 28px;
+    }
+
+    /* Mobile drawer menu styled cleanly */
+    .nav-links {
+        position: absolute;
+        top: 80px;
+        left: 20px;
+        right: 20px;
+        background: var(--surface-color);
+        border: 1px solid var(--nav-border);
+        border-radius: 20px;
+        flex-direction: column;
+        gap: 8px;
+        padding: 24px;
+        box-shadow: 0 16px 40px rgba(8, 61, 53, 0.16);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-12px);
+        transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                    visibility 0.3s;
+        z-index: 999;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+        font-size: 15px;
+        border-radius: 10px;
+        letter-spacing: 1.5px;
+    }
+
+    .nav-links a::after {
+        display: none; /* Hide gold underline hover bar on mobile */
+    }
+
+    .nav-links a:hover {
+        background-color: var(--bg-color);
+        color: var(--ocean-teal);
+    }
+
+    /* Show links drawer and animate hamburger bars when checked */
+    .mobile-toggle-checkbox:checked ~ .nav-links {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .mobile-toggle-checkbox:checked ~ .mobile-toggle-label span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .mobile-toggle-checkbox:checked ~ .mobile-toggle-label span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-toggle-checkbox:checked ~ .mobile-toggle-label span:nth-child(3) {
+        transform: translateY(-8.2px) rotate(-45deg);
+    }
+
+    /* Hero section mobile responsive tweaks */
+    .hero-section {
+        padding: 140px 0 80px;
+        min-height: auto;
+    }
+    
+    .hero-bg-image {
+        opacity: 0.75; /* Increased opacity by another +30% for higher mobile visibility */
+    }
+    
+    .hero-description {
+        margin-bottom: 30px;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .hero-actions a {
+        width: 100%;
+        max-width: 280px;
+    }
+
+
+    .showcase-container {
+        gap: 16px;
+    }
+    
+    .carousel-btn {
+        position: absolute;
+        top: 32%;
+        width: 48px;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.95);
+        border-color: rgba(18, 91, 80, 0.25);
+        box-shadow: 0 6px 20px rgba(8, 61, 53, 0.12);
+    }
+    
+    .prev-btn {
+        left: -12px;
+    }
+    
+    .next-btn {
+        right: -12px;
+    }
+    
+    .card-mount {
+        min-height: 525px;
+        max-width: 100%;
+    }
+    
+    .success-card {
+        padding: 18px;
+    }
+    
+    .service-title {
+        font-size: 22px;
+    }
+}
+
+/* ==========================================================================
+   8. SITE FOOTER (Green Theme with Business Card & 3D Spotlight Card)
+   ========================================================================== */
+.site-footer-green {
+    background-color: var(--deep-palm);
+    color: var(--bg-color);
+    padding: 100px 0 0;
+    position: relative;
+    z-index: 5;
+    border-top: 3px solid var(--sun-accent);
+    overflow: hidden;
+}
+
+.footer-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 60px;
+    align-items: center;
+    padding-bottom: 80px;
+}
+
+/* 8.1 BUSINESS CARD (LEFT SIDE) */
+.business-card {
+    background: var(--surface-color);
+    color: var(--deep-palm);
+    padding: 40px;
+    border-radius: var(--border-radius-card);
+    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(229, 176, 92, 0.2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.business-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--sun-accent);
+}
+
+.business-card .card-logo {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.business-card .card-logo .logo-move {
+    color: var(--ocean-teal);
+    font-style: italic;
+}
+
+.business-card .card-logo .logo-rx {
+    color: var(--sun-accent);
+}
+
+.business-card h3 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--deep-palm);
+    margin-bottom: 4px;
+}
+
+.business-card .card-specialty {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--ocean-teal);
+}
+
+.business-card .card-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.business-card .card-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.business-card a.card-contact-item:hover {
+    color: var(--ocean-teal);
+}
+
+.business-card .card-contact-item svg {
+    color: var(--ocean-teal);
+    flex-shrink: 0;
+}
+
+.business-card .card-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.business-card .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    color: var(--ocean-teal);
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 10px rgba(18, 91, 80, 0.08);
+}
+
+.business-card .social-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.business-card .social-icon:hover {
+    background-color: var(--ocean-teal);
+    color: var(--surface-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(18, 91, 80, 0.2);
+}
+
+/* 8.2 3D SPOTLIGHT CARD (RIGHT SIDE) */
+.card-container-3d {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 380px;
+    perspective: 2000px;
+}
+
+.canvas-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 36px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 30px 70px rgba(8, 61, 53, 0.25);
+    background: linear-gradient(135deg, var(--ocean-teal) 0%, var(--deep-palm) 100%);
+    border: 2px solid rgba(229, 176, 92, 0.25);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    overflow: hidden;
+}
+
+.canvas-3d::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(229, 176, 92, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 10% 80%, rgba(24, 154, 134, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.tracker {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    cursor: pointer;
+}
+
+.tr-1  { grid-area: 1 / 1; }
+.tr-2  { grid-area: 1 / 2; }
+.tr-3  { grid-area: 1 / 3; }
+.tr-4  { grid-area: 1 / 4; }
+.tr-5  { grid-area: 1 / 5; }
+.tr-6  { grid-area: 2 / 1; }
+.tr-7  { grid-area: 2 / 2; }
+.tr-8  { grid-area: 2 / 3; }
+.tr-9  { grid-area: 2 / 4; }
+.tr-10 { grid-area: 2 / 5; }
+.tr-11 { grid-area: 3 / 1; }
+.tr-12 { grid-area: 3 / 2; }
+.tr-13 { grid-area: 3 / 3; }
+.tr-14 { grid-area: 3 / 4; }
+.tr-15 { grid-area: 3 / 5; }
+.tr-16 { grid-area: 4 / 1; }
+.tr-17 { grid-area: 4 / 2; }
+.tr-18 { grid-area: 4 / 3; }
+.tr-19 { grid-area: 4 / 4; }
+.tr-20 { grid-area: 4 / 5; }
+.tr-21 { grid-area: 5 / 1; }
+.tr-22 { grid-area: 5 / 2; }
+.tr-23 { grid-area: 5 / 3; }
+.tr-24 { grid-area: 5 / 4; }
+.tr-25 { grid-area: 5 / 5; }
+
+/* Rotations triggered on sibling canvas */
+.canvas-3d:has(.tr-1:hover)  { transform: rotateX(12deg) rotateY(-18deg); }
+.canvas-3d:has(.tr-2:hover)  { transform: rotateX(12deg) rotateY(-9deg); }
+.canvas-3d:has(.tr-3:hover)  { transform: rotateX(12deg) rotateY(0deg); }
+.canvas-3d:has(.tr-4:hover)  { transform: rotateX(12deg) rotateY(9deg); }
+.canvas-3d:has(.tr-5:hover)  { transform: rotateX(12deg) rotateY(18deg); }
+.canvas-3d:has(.tr-6:hover)  { transform: rotateX(6deg) rotateY(-18deg); }
+.canvas-3d:has(.tr-7:hover)  { transform: rotateX(6deg) rotateY(-9deg); }
+.canvas-3d:has(.tr-8:hover)  { transform: rotateX(6deg) rotateY(0deg); }
+.canvas-3d:has(.tr-9:hover)  { transform: rotateX(6deg) rotateY(9deg); }
+.canvas-3d:has(.tr-10:hover) { transform: rotateX(6deg) rotateY(18deg); }
+.canvas-3d:has(.tr-11:hover) { transform: rotateX(0deg) rotateY(-18deg); }
+.canvas-3d:has(.tr-12:hover) { transform: rotateX(0deg) rotateY(-9deg); }
+.canvas-3d:has(.tr-13:hover) { transform: rotateX(0deg) rotateY(0deg); }
+.canvas-3d:has(.tr-14:hover) { transform: rotateX(0deg) rotateY(9deg); }
+.canvas-3d:has(.tr-15:hover) { transform: rotateX(0deg) rotateY(18deg); }
+.canvas-3d:has(.tr-16:hover) { transform: rotateX(-6deg) rotateY(-18deg); }
+.canvas-3d:has(.tr-17:hover) { transform: rotateX(-6deg) rotateY(-9deg); }
+.canvas-3d:has(.tr-18:hover) { transform: rotateX(-6deg) rotateY(0deg); }
+.canvas-3d:has(.tr-19:hover) { transform: rotateX(-6deg) rotateY(9deg); }
+.canvas-3d:has(.tr-20:hover) { transform: rotateX(-6deg) rotateY(18deg); }
+.canvas-3d:has(.tr-21:hover) { transform: rotateX(-12deg) rotateY(-18deg); }
+.canvas-3d:has(.tr-22:hover) { transform: rotateX(-12deg) rotateY(-9deg); }
+.canvas-3d:has(.tr-23:hover) { transform: rotateX(-12deg) rotateY(0deg); }
+.canvas-3d:has(.tr-24:hover) { transform: rotateX(-12deg) rotateY(9deg); }
+.canvas-3d:has(.tr-25:hover) { transform: rotateX(-12deg) rotateY(18deg); }
+
+.card-content-3d {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    display: flex;
+    z-index: 5;
+    transform-style: preserve-3d;
+}
+
+.spotlight-split-layout {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+.spotlight-image-side {
+    width: 38%;
+    height: 100%;
+    position: relative;
+    border-right: 1px solid rgba(229, 176, 92, 0.15);
+    z-index: 1;
+    transform: translateZ(30px);
+    overflow: hidden;
+}
+
+.spotlight-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+}
+
+.spotlight-text-side {
+    width: 62%;
+    height: 100%;
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--surface-color);
+}
+
+.spotlight-badge {
+    align-self: flex-start;
+    background: var(--sun-accent);
+    color: var(--deep-palm);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 16px;
+    border-radius: var(--border-radius-pill);
+    transform: translateZ(45px);
+    box-shadow: 0 4px 15px rgba(229, 176, 92, 0.3);
+}
+
+.card-title-3d {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--surface-color);
+    transform: translateZ(60px);
+    margin-top: 10px;
+    line-height: 1.25;
+}
+
+.card-description-3d {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: #e2edea;
+    transform: translateZ(50px);
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.card-description-3d .quote-author {
+    color: var(--sun-accent);
+    font-weight: 600;
+    font-style: normal;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+.card-stats-row-3d {
+    display: flex;
+    gap: 30px;
+    margin-top: 15px;
+    transform: translateZ(55px);
+}
+
+.stat-box-3d {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-number-3d {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--sun-accent);
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.stat-label-3d {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(248, 246, 240, 0.7);
+    font-weight: 600;
+}
+
+/* 8.3 FOOTER BOTTOM BAR */
+.footer-bottom-bar {
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 24px 0;
+    border-top: 1px solid rgba(248, 246, 240, 0.08);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(248, 246, 240, 0.5);
+    text-align: center;
+}
+
+/* 8.4 RESPONSIVE FOOTER MEDIA QUERIES */
+@media (max-width: 900px) {
+    .footer-grid-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        padding-bottom: 60px;
+    }
+    
+    .business-card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-footer-green {
+        padding: 80px 0 0;
+    }
+    
+    .card-container-3d {
+        height: auto;
+    }
+    
+    .canvas-3d {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .tracker {
+        display: none;
+    }
+    
+    .card-content-3d {
+        position: relative;
+        height: auto;
+    }
+    
+    .spotlight-split-layout {
+        flex-direction: column;
+    }
+    
+    .spotlight-image-side {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        transform: none;
+        border-right: none;
+        border-bottom: 1px solid rgba(229, 176, 92, 0.15);
+        border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
+    }
+    
+    .spotlight-img {
+        object-position: center 8%;
+    }
+    
+    .spotlight-text-side {
+        width: 100%;
+        padding: 30px;
+        gap: 24px;
+        height: auto;
+    }
+    
+    .card-description-3d {
+        transform: none;
+    }
+    
+    .spotlight-badge {
+        transform: none;
+    }
+    
+    .card-title-3d {
+        transform: none;
+    }
+    
+    .card-stats-row-3d {
+        transform: none;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+}
+
+/* Logo image styles */
+.logo-img {
+    height: 76px;
+    width: auto;
+    display: block;
+}
+
+.footer-logo-img {
+    height: 72px;
+    width: auto;
+    display: block;
+}
+
+/* Spinner Styles */
+.loading-overlay-spinner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(18, 91, 80, 0.1);
+    border-top: 3px solid var(--ocean-teal);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   10. SITE PRELOADER
+   ========================================================================== */
+.preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--deep-palm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                visibility 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.preloader-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader {
+    --ANIMATION-DELAY-MULTIPLIER: 70ms;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 12rem;
+}
+
+.loader span {
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    transform: translateY(8rem);
+    animation: hideAndSeek 1.2s alternate infinite cubic-bezier(0.86, 0, 0.07, 1);
+    display: inline-block;
+}
+
+.loader span.char-move {
+    color: #ffffff;
+}
+
+.loader span.char-rx {
+    color: var(--sun-accent);
+}
+
+.loader .m {
+    animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 0);
+}
+.loader .o {
+    animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 1);
+}
+.loader .v {
+    animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 2);
+}
+.loader .e {
+    animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 3);
+}
+.loader .r {
+    animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 4);
+    margin-left: 2px;
+}
+.loader .x {
+    animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 5);
+}
+
+@keyframes hideAndSeek {
+    0% {
+        transform: translateY(8rem);
+    }
+    100% {
+        transform: translateY(0rem);
+    }
+}
+
+/* ==========================================================================
+   11. CLIENT TESTIMONIALS SECTION (With Glassmorphism Card & Glowing Blob)
+   ========================================================================== */
+.testimonials-section {
+    padding: 120px 0 160px;
+    background-color: transparent;
+    position: relative;
+    z-index: 5;
+    overflow: hidden;
+}
+
+/* Full-width container setup for the horizontal track */
+.testimonials-track-wrapper {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%); /* Centered full-screen breakout */
+    overflow: visible; /* Let cards enlarge outside the container bounds on click */
+    padding: 40px 0;
+    margin-top: 40px;
+}
+
+/* The infinite horizontal scroll track */
+.testimonials-track {
+    display: flex;
+    gap: 40px;
+    width: max-content;
+    will-change: transform;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.testimonials-track.dragging {
+    cursor: grabbing;
+}
+
+/* Base card styling */
+.testimonials-section .card {
+    position: relative;
+    width: 330px;
+    min-height: 440px;
+    border-radius: 18px;
+    z-index: 10;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(8, 61, 53, 0.05);
+    background: transparent;
+    padding: 5px; /* offset space for border overlay outline */
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                z-index 0.1s;
+    cursor: pointer;
+}
+
+/* Hover scales up slightly and enhances shadow */
+.testimonials-section .card:hover {
+    box-shadow: 0 28px 65px rgba(8, 61, 53, 0.09);
+    transform: translateY(-4px);
+}
+
+/* Active clicked state: stops animation, enlarges, lifts layer order */
+.testimonials-section .card.active-focus {
+    transform: scale(1.08) rotate(0deg) !important;
+    z-index: 999;
+    box-shadow: 0 35px 80px rgba(8, 61, 53, 0.18);
+    animation: none !important; /* Stop individual float animations */
+}
+
+/* Organic floating and rotating sways staggered across cards */
+.testimonials-section .card:nth-child(4n+1) {
+    animation: float-1 7s ease-in-out infinite alternate;
+}
+.testimonials-section .card:nth-child(4n+2) {
+    animation: float-2 8s ease-in-out infinite alternate;
+}
+.testimonials-section .card:nth-child(4n+3) {
+    animation: float-3 9s ease-in-out infinite alternate;
+}
+.testimonials-section .card:nth-child(4n+4) {
+    animation: float-4 7.5s ease-in-out infinite alternate;
+}
+
+/* Pause card sways when the track is paused or dragging */
+.testimonials-track.paused .card,
+.testimonials-track.dragging .card {
+    animation-play-state: paused;
+}
+
+@keyframes float-1 {
+    0% { transform: translateY(0) rotate(-1.5deg); }
+    100% { transform: translateY(-12px) rotate(1.5deg); }
+}
+@keyframes float-2 {
+    0% { transform: translateY(-6px) rotate(1deg); }
+    100% { transform: translateY(6px) rotate(-1deg); }
+}
+@keyframes float-3 {
+    0% { transform: translateY(5px) rotate(-1.2deg); }
+    100% { transform: translateY(-7px) rotate(1.2deg); }
+}
+@keyframes float-4 {
+    0% { transform: translateY(-8px) rotate(-1deg); }
+    100% { transform: translateY(4px) rotate(1deg); }
+}
+
+/* Inner content area of the card (Glassmorphic) */
+.testimonials-section .bg {
+    position: relative;
+    width: 100%;
+    flex: 1; /* Stretch to fill card height */
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    outline: 2px solid white;
+    box-sizing: border-box;
+}
+
+/* Animated glowing backdrop blob matching the brand palette */
+.testimonials-section .blob {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: var(--ocean-teal);
+    opacity: 0.65;
+    filter: blur(24px);
+    animation: blob-bounce 6s infinite ease;
+}
+
+@keyframes blob-bounce {
+    0% {
+        transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+    25% {
+        transform: translate(-100%, -100%) translate3d(100%, 0, 0);
+    }
+    50% {
+        transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
+    }
+    75% {
+        transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+    }
+    100% {
+        transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+}
+
+/* Text typography for the testimonials */
+.testimonial-stars {
+    color: var(--sun-accent);
+    font-size: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 4px;
+}
+
+.testimonial-quote {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 16px;
+    white-space: pre-line;
+}
+
+.testimonial-author-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+}
+
+.testimonial-author-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--deep-palm);
+}
+
+.testimonial-author-meta {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sun-accent);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 2px;
+}
+
+@media (max-width: 600px) {
+    .testimonials-section .card {
+        width: 290px;
+        min-height: 400px;
+    }
+    .testimonials-section .bg {
+        padding: 20px;
+    }
+    .testimonial-quote {
+        font-size: 13.5px;
+        line-height: 1.55;
+    }
+}
+
+/* ==========================================================================
+   12. PRACTICE BIO PRINCIPLES & SPECIALTIES GRID (Migrated from Mission Page)
+   ========================================================================== */
+
+/* Bio Accent Section (Mollie's Practice & Principles) */
+.bio-accent-section {
+    padding: 100px 0 120px;
+    position: relative;
+    z-index: 2;
+}
+
+.bio-cards-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bio-cards-container .bio-card-text {
+    max-width: 100%;
+    margin: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+@media (min-width: 992px) {
+    .bio-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 48px;
+    }
+}
+
+.bio-card-text {
+    background: var(--surface-color);
+    padding: 48px;
+    border-radius: 32px;
+    box-shadow: 0 10px 40px rgba(18, 91, 80, 0.05);
+    border: 1px solid rgba(18, 91, 80, 0.05);
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.bio-card-text h2 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+.bio-card-text p {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.bio-card-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* specialties-section using ScrollStack layout */
+.specialties-section {
+    position: relative;
+    padding: 80px 0 100px;
+    z-index: 2;
+}
+
+.scroll-stack-inner {
+    position: relative;
+    max-width: 1050px;
+    margin: 40px auto 0;
+    padding: 0;
+}
+
+.scroll-stack-card {
+    position: relative;
+    background: var(--surface-color);
+    border-radius: var(--border-radius-card);
+    padding: 48px;
+    box-shadow: 0 25px 65px rgba(8, 61, 53, 0.08);
+    border: 1px solid rgba(18, 91, 80, 0.06);
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    align-items: center;
+    min-height: 480px;
+    box-sizing: border-box;
+    transform-origin: top center;
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+.specialty-info-side {
+    width: 54%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.specialty-info-side .specialty-badge {
+    display: inline-block;
+    background: var(--sun-accent);
+    color: var(--deep-palm);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 16px;
+    border-radius: var(--border-radius-pill);
+    box-shadow: 0 4px 15px rgba(229, 176, 92, 0.35);
+    margin-bottom: 24px;
+}
+
+.specialty-info-side h3 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.2vw, 34px);
+    font-weight: 700;
+    color: var(--deep-palm);
+    margin-bottom: 18px;
+    line-height: 1.25;
+}
+
+.specialty-info-side p {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.8vw, 17px);
+    line-height: 1.65;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    font-weight: 400;
+}
+
+.specialty-image-side {
+    width: 46%;
+    height: 380px;
+    border-radius: var(--border-radius-img);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 12px 35px rgba(8, 61, 53, 0.1);
+}
+
+.specialty-image-side .specialty-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.scroll-stack-end {
+    width: 100%;
+    height: 1px;
+}
+
+/* Lenis smooth scrolling base settings */
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+/* Responsive adjustments for stack cards */
+@media (max-width: 900px) {
+    .scroll-stack-card {
+        flex-direction: column;
+        gap: 32px;
+        padding: 32px;
+        min-height: auto;
+        transform: none !important;
+        filter: none !important;
+    }
+
+    .specialty-info-side {
+        width: 100%;
+    }
+
+    .specialty-image-side {
+        width: 100%;
+        height: 280px;
+    }
+}
+
+@media (max-width: 600px) {
+    .bio-accent-section {
+        padding: 60px 0 80px;
+    }
+    .bio-card-text {
+        padding: 32px 24px;
+        border-radius: 24px;
+    }
+    .bio-card-text h2 {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+    .bio-card-text p {
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+}
+
+
+
+

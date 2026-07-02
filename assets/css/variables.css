@@ -1,0 +1,37 @@
+/* =========================================
+   TROPICAL HIGH-CONTRAST VARIABLES (MoveRx v3)
+   ========================================= */
+:root {
+    /* Color Palette */
+    --bg-color: #f8f6f0;       /* Warm Sand */
+    --surface-color: #ffffff;  /* Pure White */
+    --deep-palm: #083d35;      /* Darkest Green for text & elements */
+    --ocean-teal: #125b50;     /* Vibrant Brand Green */
+    --ocean-hover: #0d453c;    /* Deep Brand Green Hover */
+    --sun-accent: #e5b05c;     /* Tropical Gold/Yellow Accent */
+    
+    /* Semantic Color Aliases */
+    --text-primary: #083d35;
+    --text-secondary: #3a5a52;
+    --brand-color: #125b50;
+    --brand-hover: #0d453c;
+    
+    /* Navigation Bar System */
+    --nav-bg: rgba(255, 255, 255, 0.92);
+    --nav-bg-hover: rgba(248, 246, 240, 0.95);
+    --nav-border: rgba(18, 91, 80, 0.08);
+    --nav-shadow: 0 12px 35px rgba(18, 91, 80, 0.12);
+    
+    /* Typography Tokens */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Outfit', sans-serif;
+    
+    /* Spacing and Borders */
+    --border-radius-pill: 980px;
+    --border-radius-card: 24px;
+    --border-radius-img: 16px;
+    
+    /* Transition Speed */
+    --transition-smooth: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-fast: 0.2s ease;
+}
