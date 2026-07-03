@@ -18,7 +18,7 @@ const websiteContent = {
         },
         links: [
             { text: "Specialties", url: "#specialties" },
-            { text: "Gallery", url: "#gallery" },
+            { text: "My Journey", url: "#journey" },
             { text: "Testimonials", url: "#testimonials" }
         ],
         cta: {
@@ -934,12 +934,13 @@ function renderGallery() {
     const mainContent = document.getElementById("main-content");
     if (!mainContent) return;
 
-    const data = websiteContent.gallery;
-    if (!data) return;
+    const galleryData = websiteContent.gallery;
+    const journeyData = websiteContent.journey;
+    if (!galleryData || !journeyData) return;
 
     const section = document.createElement("section");
     section.className = "gallery-grid-section";
-    section.id = "gallery";
+    section.id = "journey"; // changed from gallery
 
     const container = document.createElement("div");
     container.className = "container";
@@ -947,7 +948,7 @@ function renderGallery() {
     const stackContainerDiv = document.createElement("div");
     stackContainerDiv.className = "stack-gallery-container";
 
-    // Left Column: Text & Dynamic Quote Panel
+    // Left Column: Journey Text 
     const textColumn = document.createElement("div");
     textColumn.className = "gallery-text-column";
 
@@ -955,42 +956,22 @@ function renderGallery() {
     sectionHeader.className = "section-header animate-fade-in";
 
     const heading = document.createElement("h2");
-    heading.textContent = data.heading;
+    heading.textContent = journeyData.heading;
     sectionHeader.appendChild(heading);
-
-    const subtext = document.createElement("p");
-    subtext.className = "section-subtext";
-    subtext.textContent = data.subtext;
-    sectionHeader.appendChild(subtext);
-
     textColumn.appendChild(sectionHeader);
 
-    // Active Quote Display Card
-    const quoteCard = document.createElement("div");
-    quoteCard.className = "gallery-quote-card animate-fade-in";
-    quoteCard.style.animationDelay = "0.15s";
+    const journeyContent = document.createElement("div");
+    journeyContent.className = "journey-content animate-fade-in";
+    journeyContent.style.animationDelay = "0.15s";
+    
+    journeyData.paragraphs.forEach(pText => {
+        const p = document.createElement("p");
+        p.className = "journey-paragraph";
+        p.innerHTML = pText;
+        journeyContent.appendChild(p);
+    });
 
-    const quoteDisplay = document.createElement("div");
-    quoteDisplay.className = "quote-display";
-
-    const quoteText = document.createElement("p");
-    quoteText.className = "gallery-quote-text";
-    quoteDisplay.appendChild(quoteText);
-
-    const quoteAuthor = document.createElement("div");
-    quoteAuthor.className = "gallery-quote-author";
-
-    const quoteName = document.createElement("span");
-    quoteName.className = "gallery-quote-name";
-    quoteAuthor.appendChild(quoteName);
-
-    const quoteMeta = document.createElement("span");
-    quoteMeta.className = "gallery-quote-meta";
-    quoteAuthor.appendChild(quoteMeta);
-
-    quoteDisplay.appendChild(quoteAuthor);
-    quoteCard.appendChild(quoteDisplay);
-    textColumn.appendChild(quoteCard);
+    textColumn.appendChild(journeyContent);
 
     // Right Column: Card Stack Container
     const stackColumn = document.createElement("div");
@@ -1001,9 +982,9 @@ function renderGallery() {
     stackContainer.className = "stack-container";
 
     // Render cards backwards so the first item in array (index 0) is appended last (visual top)
-    const reversedItems = [...data.items].reverse();
+    const reversedItems = [...galleryData.items].reverse();
     reversedItems.forEach((item, index) => {
-        const originalIndex = data.items.length - index - 1;
+        const originalIndex = galleryData.items.length - index - 1;
         const wrapper = document.createElement("div");
         wrapper.className = "card-rotate-wrapper";
         wrapper.dataset.index = originalIndex;
@@ -1013,7 +994,7 @@ function renderGallery() {
 
         const img = document.createElement("img");
         img.src = item.image;
-        img.alt = `Success story of ${item.title}`;
+        img.alt = `Gallery image ${index + 1}`;
         img.loading = "lazy";
         
         card.appendChild(img);
@@ -1084,38 +1065,6 @@ function initGalleryStack() {
             }
         });
 
-        // Sync left side description quote panel with the top card index
-        const topCardIdx = cardsOrder[totalCards - 1];
-        updateQuotePanel(topCardIdx);
-    }
-
-    let lastActiveIdx = -1;
-    function updateQuotePanel(activeIdx) {
-        if (activeIdx === lastActiveIdx) return;
-        lastActiveIdx = activeIdx;
-
-        const quoteTextEl = document.querySelector('.gallery-quote-text');
-        const quoteNameEl = document.querySelector('.gallery-quote-name');
-        const quoteMetaEl = document.querySelector('.gallery-quote-meta');
-        const quoteDisplay = document.querySelector('.quote-display');
-
-        if (!quoteTextEl || !quoteDisplay) return;
-
-        const item = websiteContent.gallery.items[activeIdx];
-        if (!item) return;
-
-        // Visual fade out
-        quoteDisplay.classList.add('fade-out');
-
-        // Swap details after transition completes
-        setTimeout(() => {
-            quoteTextEl.textContent = item.description;
-            quoteNameEl.textContent = item.title;
-            quoteMetaEl.textContent = `${item.tag} • ${item.date}`;
-
-            // Visual fade in
-            quoteDisplay.classList.remove('fade-out');
-        }, 300);
     }
 
     function sendToBack(cardIdx) {

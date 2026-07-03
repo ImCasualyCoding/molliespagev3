@@ -1201,7 +1201,7 @@ button:focus-visible {
     .spotlight-image-side {
         width: 100%;
         height: auto;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 3 / 4;
         transform: none;
         border-right: none;
         border-bottom: 1px solid rgba(229, 176, 92, 0.15);
@@ -1828,72 +1828,24 @@ html.lenis, html.lenis body {
     max-width: 100%;
 }
 
-.gallery-quote-card {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius-card);
-    padding: 40px;
-    box-shadow: 0 15px 40px rgba(8, 61, 53, 0.04);
-    border: 1px solid rgba(18, 91, 80, 0.05);
-    width: 100%;
-    min-height: 200px;
+.journey-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    position: relative;
 }
 
-.quote-display {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.quote-display.fade-out {
-    opacity: 0;
-    transform: translateY(12px);
-}
-
-.gallery-quote-text {
+.journey-paragraph {
     font-family: var(--font-body);
-    font-size: clamp(16px, 2vw, 19px);
-    line-height: 1.6;
+    font-size: clamp(16px, 2vw, 18px);
+    line-height: 1.7;
     color: var(--text-secondary);
-    font-style: italic;
-    margin-bottom: 24px;
-    position: relative;
+    margin-bottom: 20px;
 }
 
-.gallery-quote-text::before {
-    content: "“";
-    font-family: var(--font-display);
-    font-size: 60px;
-    color: rgba(18, 91, 80, 0.08);
-    position: absolute;
-    top: -30px;
-    left: -20px;
-    line-height: 1;
+.journey-paragraph:last-child {
+    margin-bottom: 0;
 }
 
-.gallery-quote-author {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
 
-.gallery-quote-name {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--deep-palm);
-}
-
-.gallery-quote-meta {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--ocean-teal);
-}
 
 /* Stack Container Side */
 .gallery-stack-column {
