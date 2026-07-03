@@ -55,7 +55,7 @@ button:focus-visible {
 /* Layout Container */
 .container {
     width: 87.5%;
-    max-width: 1050px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -123,7 +123,7 @@ button:focus-visible {
 /* Glassmorphism navigation pill */
 .nav-pill {
     width: 100%;
-    max-width: 1050px;
+    max-width: 1200px;
     background: var(--nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -1644,7 +1644,7 @@ button:focus-visible {
 
 .scroll-stack-inner {
     position: relative;
-    max-width: 1050px;
+    max-width: 1200px;
     margin: 40px auto 0;
     padding: 0;
 }
@@ -1960,7 +1960,7 @@ html.lenis, html.lenis body {
 .stack-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
