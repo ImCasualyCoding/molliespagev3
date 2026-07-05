@@ -403,7 +403,8 @@ function renderHero() {
 
     // 4. Create Centered Content Container
     const container = document.createElement("div");
-    container.className = "container hero-content-wrapper animate-fade-in";
+    container.className = "container hero-content-wrapper";
+    container.style.opacity = '0'; // Hide initially, animation triggered after preloader
 
     // Accent Badge
     const badge = document.createElement("span");
@@ -1612,6 +1613,14 @@ document.addEventListener("DOMContentLoaded", () => {
             
             setTimeout(() => {
                 preloader.classList.add("fade-out");
+                
+                // Trigger hero animation once preloader starts fading
+                const heroContent = document.querySelector('.hero-content-wrapper');
+                if (heroContent) {
+                    heroContent.style.opacity = '';
+                    heroContent.classList.add('animate-fade-in');
+                }
+
                 setTimeout(() => {
                     preloader.remove();
                     // Recalculate ScrollStack card offsets and leaf transforms now that layout has settled

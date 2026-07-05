@@ -1240,13 +1240,13 @@ button:focus-visible {
 
 /* Logo image styles */
 .logo-img {
-    height: 76px;
+    height: 99px;
     width: auto;
     display: block;
 }
 
 .footer-logo-img {
-    height: 72px;
+    height: 122px;
     width: auto;
     display: block;
 }
@@ -1754,8 +1754,6 @@ html.lenis, html.lenis body {
         gap: 32px;
         padding: 32px;
         min-height: auto;
-        transform: none !important;
-        filter: none !important;
     }
 
     .specialty-info-side {
