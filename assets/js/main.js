@@ -642,7 +642,7 @@ function renderFooter() {
             <span class="spotlight-badge">Clinical Spotlight</span>
             <h2 class="card-title-3d">The MoveRx Mission</h2>
             <p class="card-description-3d">
-                “Reclaiming mobility requires precise corrective exercise and post-rehab expertise, ensuring every movement is safe, evidence-based, and coordinated with your healthcare team.”
+                “MoveRx integrates functional movement, corrective exercise, and mindful coaching to support whole‑body wellness. My mission is to help clients move with ease, strength, and purpose — in the gym, at work, and throughout life.”
                 <span class="quote-author">– Mollie W.</span>
             </p>
             <div class="card-stats-row-3d">
