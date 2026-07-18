@@ -119,7 +119,7 @@ const websiteContent = {
             "For more than 25 years, I’ve dedicated my career to helping people move better, feel stronger, and reclaim confidence in their bodies. As a Specialized Personal Trainer serving Boynton Beach and the surrounding communities, my passion lies in functional movement, corrective exercise, and guiding high‑risk and special populations with the care, precision, and encouragement they deserve.",
             "My training foundation comes from Fitness Institute International, where I studied Kinesiology and High‑Risk Populations. Over the years, I’ve continued to expand my expertise with advanced credentials including Master Trainer, Corrective Exercise Specialist, and Functional Training Specialist. This ongoing education allows me to design safe, effective, and highly personalized programs for every client — from post‑rehabilitation and chronic conditions to body sculpting and real‑world strength.",
             "What truly drives me is connection. I believe in meeting clients exactly where they are, honoring their unique challenges, and celebrating every win along the way. My coaching style blends science‑based training with compassion, accountability, and a genuine commitment to long‑term well‑being.",
-            "Whether you’re rebuilding strength, improving mobility, or striving for your next level of fitness, I’m here to guide you with expertise, patience, and unwavering support. Together, we’ll create a stronger, healthier, more confident you."
+            "Whether you’re rebuilding strength, improving mobility, or striving for your next level of fitness, I'll be there to guide you with expertise, patience, and unwavering support. Together, we’ll create a stronger, healthier, more confident you."
         ]
     },
 
@@ -139,7 +139,7 @@ const websiteContent = {
         },
         {
             title: "Strength Training Specialist",
-            description: "These sessions feature evidence-based exercise programs personally designed to improve physical performance, build muscle, and reduce injury risk.\n\nWe assess and construct specific movement patterns, teach proper lifting techniques, and monitor progress, working with everyone from elite athletes to individuals recovering from injuries.",
+            description: "These sessions feature evidence-based exercise programs personally designed to improve physical performance, build muscle, and reduce injury risk.\n\nMollie assess and constructs specific movement patterns, teaches proper lifting techniques, and monitors progress, working with everyone from elite athletes to individuals recovering from injuries.",
             image: "assets/images/mission/strength_training.png",
             badge: "Performance"
         },
