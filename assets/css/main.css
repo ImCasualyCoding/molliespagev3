@@ -1240,7 +1240,7 @@ button:focus-visible {
 
 /* Logo image styles */
 .logo-img {
-    height: 99px;
+    height: 149px;
     width: auto;
     display: block;
 }
@@ -1951,7 +1951,39 @@ html.lenis, html.lenis body {
     }
 }
 
+.stack-mobile-controls {
+    display: none;
+}
 
+@media (max-width: 900px) {
+    .stack-mobile-controls {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 32px;
+        z-index: 10;
+        position: relative;
+    }
 
-
-
+    .stack-btn {
+        background: var(--surface-color);
+        color: var(--deep-palm);
+        border: 2px solid var(--ocean-teal);
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(8, 61, 53, 0.15);
+        transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+    
+    .stack-btn:hover, .stack-btn:active {
+        background: var(--ocean-teal);
+        color: var(--surface-color);
+        transform: scale(1.05);
+    }
+}

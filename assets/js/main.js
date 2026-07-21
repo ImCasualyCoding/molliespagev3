@@ -35,8 +35,7 @@ const websiteContent = {
         image: "assets/images/hero/hero-bg.jpg",
         imageAlt: "Mollie's brother wading in beach ocean waves during corrective physical mobility therapy",
         ctas: [
-            { text: "Start Your Journey", url: "#contact", primary: true },
-            { text: "The Mission", url: "#principles", primary: false }
+            { text: "Start Your Journey in person or online today", url: "#contact", primary: true }
         ]
     },
 
@@ -157,24 +156,29 @@ const websiteContent = {
         subtext: "See and hear from the people who have transformed their lives with MoveRx. Real stories of recovery, strength, and renewed vitality.",
         list: [
             {
-                stars: 5,
+            
                 author: "J.C.",
                 quote: "Over the past 6 years, Mollie’s training sessions have helped this one-time couch potato develop muscle mass, prep for and recoup quickly from three major surgeries, and feel 20 years younger."
             },
             {
-                stars: 5,
+            
                 author: "J.O.",
                 quote: "Working with Mollie was truly life-changing. Beyond challenging and engaging workouts tailored to my goals, she taught me about my body and how sustainable lifestyle and nutrition changes make a lasting impact. I didn't just lose weight—I became stronger, more confident, and healthier overall."
             },
             {
-                stars: 5,
+            
                 author: "A.C.",
                 quote: "I’ve worked with Mollie since high school, and she's trained me through so many stages of life—from high school sports, to wedding dress prep, and even rehabbing a hip injury. She doesn't just guide workouts, she teaches you how to stay safe, avoid injury, and feel confident both mentally and physically.\n\nHer expertise and attention to my individual needs have helped me perform at my best while gaining lifelong knowledge about stretching, nutrition, and how to properly rest and recover. I highly recommend Mollie. She is a top quality trainer and results-driven mentor who truly makes exercise fun and engaging."
             },
             {
-                stars: 5,
+            
                 author: "D.S.",
                 quote: "13 months ago Mollie began working her P.T magic with me.\n\nThe first four months involved pool work only. Hydrotherapy soon freed up the impinged nerve connections to my legs and feet while strengthening weakened muscles and tendons. Month six began in the gym. Specialized exercises, stretches, aerobic activities and weight lifting have made me stronger and more flexible. At Age 72 bigger biceps is a tangible reward. Mollie is super educated and she really cares. I will continue to work with her to achieve lifelong physical and mental well being."
+            },
+            {
+            
+                author: "J.H.",
+                quote: "When I lost vision in one eye three years ago, Mollie helped me become stronger. She guided me through rebuilding my confidence and balance, and truly saved my life. Along the way, she didn't just become my trainer - she become a good friend."
             }
         ]
     },
@@ -406,11 +410,6 @@ function renderHero() {
     container.className = "container hero-content-wrapper";
     container.style.opacity = '0'; // Hide initially, animation triggered after preloader
 
-    // Accent Badge
-    const badge = document.createElement("span");
-    badge.className = "pill-badge";
-    badge.textContent = websiteContent.hero.badge;
-    container.appendChild(badge);
 
     // Main Heading
     const heading = document.createElement("h1");
@@ -662,16 +661,6 @@ function renderFooter() {
     gridContainer.appendChild(leftCol);
     gridContainer.appendChild(rightCol);
     footer.appendChild(gridContainer);
-
-    // 3. Add Footer Bottom Copyright
-    const footerBottom = document.createElement("div");
-    footerBottom.className = "footer-bottom-bar";
-    footerBottom.innerHTML = `
-        <div class="container">
-            <p>&copy; 2026 MoveRx. All rights reserved.</p>
-        </div>
-    `;
-    footer.appendChild(footerBottom);
 
     mainContent.appendChild(footer);
 }
@@ -998,6 +987,24 @@ function renderGallery() {
     });
 
     stackColumn.appendChild(stackContainer);
+
+    // Mobile controls
+    const stackControls = document.createElement("div");
+    stackControls.className = "stack-mobile-controls";
+    
+    const prevBtn = document.createElement("button");
+    prevBtn.className = "stack-btn prev-btn";
+    prevBtn.innerHTML = "&#8592;"; // Left arrow
+    prevBtn.setAttribute("aria-label", "Previous image");
+
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "stack-btn next-btn";
+    nextBtn.innerHTML = "&#8594;"; // Right arrow
+    nextBtn.setAttribute("aria-label", "Next image");
+
+    stackControls.appendChild(prevBtn);
+    stackControls.appendChild(nextBtn);
+    stackColumn.appendChild(stackControls);
     
     stackContainerDiv.appendChild(textColumn);
     stackContainerDiv.appendChild(stackColumn);
@@ -1072,6 +1079,66 @@ function initGalleryStack() {
         }
     }
 
+    // Auto-peel functionality
+    let autoPlayInterval = null;
+    let resumeTimeout = null;
+    let isPaused = false;
+
+    function nextCard(force = false) {
+        if (isPaused && !force) return;
+        const topCardIdx = cardsOrder[totalCards - 1];
+        
+        const topCardEl = cards[topCardIdx];
+        if (topCardEl) {
+            topCardEl.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            topCardEl.style.transform = `translate3d(380px, -50px, 0) scale(0.85) rotateZ(15deg)`;
+            
+            setTimeout(() => {
+                topCardEl.style.transition = '';
+                sendToBack(topCardIdx);
+            }, 400);
+        }
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayInterval = setInterval(() => nextCard(), 1500);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+    }
+
+    function pauseAutoPlay() {
+        isPaused = true;
+        clearTimeout(resumeTimeout);
+        resumeTimeout = setTimeout(() => {
+            isPaused = false;
+        }, 4000); // Wait 4 seconds after interaction to resume
+    }
+
+    startAutoPlay();
+
+    // Mobile buttons binding
+    const prevBtn = document.querySelector('.stack-btn.prev-btn');
+    const nextBtn = document.querySelector('.stack-btn.next-btn');
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            pauseAutoPlay();
+            nextCard(true);
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            pauseAutoPlay();
+            const movedIdx = cardsOrder.shift();
+            cardsOrder.push(movedIdx);
+            updateCardLayouts();
+        });
+    }
+
     // Attach dragging physics listeners to each card wrapper
     cards.forEach((cardEl, idx) => {
         let startX = 0;
@@ -1081,6 +1148,7 @@ function initGalleryStack() {
         let hasMoved = false;
 
         function handlePointerDown(e) {
+            pauseAutoPlay();
             // Only allow interactions on the top card of the stack
             const topCardIdx = cardsOrder[totalCards - 1];
             if (idx !== topCardIdx) return;
