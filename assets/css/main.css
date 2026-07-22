@@ -89,6 +89,7 @@ button:focus-visible {
     letter-spacing: 1.2px;
     padding: 12px 24px;
     font-size: 13px;
+    line-height: 1.2;
     border: 2px solid var(--ocean-teal);
     transition: var(--transition-smooth);
     cursor: pointer;
@@ -107,49 +108,74 @@ button:focus-visible {
     transform: translateY(0);
 }
 
-/* 3. STICKY NAVIGATION HEADER
+/* 3. RECTANGULAR STICKY NAVIGATION HEADER
    ========================================================================== */
 .nav-container {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 0;
     width: 100%;
-    display: flex;
-    justify-content: center;
     z-index: 1000;
-    padding: 0 20px;
+    padding: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: 0 4px 20px rgba(18, 91, 80, 0.08);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Glassmorphism navigation pill */
+.nav-container.nav-hidden {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Inner wrapper for full-width rectangular navigation bar */
 .nav-pill {
     width: 100%;
     max-width: 1200px;
-    background: var(--nav-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: var(--nav-shadow);
-    border-radius: var(--border-radius-pill);
-    padding: 12px 24px 12px 32px;
+    margin: 0 auto;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+    padding: 14px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--nav-border);
-    transition: background-color var(--transition-smooth), border var(--transition-smooth);
+    transition: background-color var(--transition-smooth);
 }
 
 .nav-pill:hover {
-    background: var(--nav-bg-hover);
-    border-color: rgba(18, 91, 80, 0.15);
+    background: transparent;
 }
 
-/* Logo brand styling */
+/* Logo brand styling (Increased size by another 40% to 52.5px) */
 .logo {
     font-family: var(--font-display);
-    font-size: 26px;
+    font-size: 52.5px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 2px;
+    line-height: 1;
+}
+
+.logo img {
+    max-height: 81px;
+    width: auto;
+}
+
+/* Wide screen desktop logo size (+50% increase) */
+@media (min-width: 1200px) {
+    .logo {
+        font-size: 78.75px;
+    }
+
+    .logo img {
+        max-height: 121.5px;
+    }
 }
 
 .logo-move {
@@ -239,7 +265,8 @@ button:focus-visible {
 /* 4. HERO SECTION LAYOUT (Full Background Image)
    ========================================================================== */
 .hero-section {
-    padding: 200px 0 140px;
+    padding: 180px 0 140px;
+    margin-top: 0;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -671,21 +698,22 @@ button:focus-visible {
         width: 100%;
     }
 
-    /* Change navbar pill behavior to support dropdown panel */
+    /* Change navbar pill behavior to support rectangular bar */
     .nav-pill {
-        padding: 12px 24px;
-        border-radius: 28px;
+        padding: 12px 20px;
+        border-radius: 0;
     }
 
     /* Mobile drawer menu styled cleanly */
     .nav-links {
         position: absolute;
-        top: 80px;
-        left: 20px;
-        right: 20px;
+        top: 100%;
+        left: 0;
+        right: 0;
         background: var(--surface-color);
-        border: 1px solid var(--nav-border);
-        border-radius: 20px;
+        border: none;
+        border-bottom: 1px solid var(--nav-border);
+        border-radius: 0 0 16px 16px;
         flex-direction: column;
         gap: 8px;
         padding: 24px;
@@ -739,7 +767,8 @@ button:focus-visible {
 
     /* Hero section mobile responsive tweaks */
     .hero-section {
-        padding: 140px 0 80px;
+        padding: 110px 0 60px;
+        margin-top: 30px;
         min-height: auto;
     }
     

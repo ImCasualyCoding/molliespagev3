@@ -127,26 +127,22 @@ const websiteContent = {
         {
             title: "Posture Correction Specialist",
             description: "Poor posture is called “Forward Head Posture” (FHP) and is successfully treatable and preventable. It is evident by the ears protruding forward past the level of the shoulders rather than being in line with them.\n\nClients often describe symptoms of extreme tension or tightness in the front of their necks, along with pain and discomfort in the back of the skull and shoulders. As FHP progresses over time, the brain attempts to level the eyes by increasing the head tilt on the skull, causing major headaches and tension behind the eyeballs.",
-            image: "assets/images/mission/posture_specialist.png",
-            badge: "Biomechanics"
+            image: "assets/images/mission/posture_specialist.png"
         },
         {
             title: "Post Rehab Specialist",
             description: "The most common client for a post-rehabilitation fitness trainer is an older adult recovering from surgeries (such as hip or knee replacements) or managing chronic joint pain.\n\nThese sessions are heavily focused on functional fitness, fall prevention, and rebuilding trust in an injured joint after physical therapy ends.",
-            image: "assets/images/mission/post_rehab.png",
-            badge: "Recovery"
+            image: "assets/images/mission/post_rehab.png"
         },
         {
             title: "Strength Training Specialist",
             description: "These sessions feature evidence-based exercise programs personally designed to improve physical performance, build muscle, and reduce injury risk.\n\nMollie assess and constructs specific movement patterns, teaches proper lifting techniques, and monitors progress, working with everyone from elite athletes to individuals recovering from injuries.",
-            image: "assets/images/mission/strength_training.png",
-            badge: "Performance"
+            image: "assets/images/mission/strength_training.png"
         },
         {
             title: "Aqua Fitness Instructor",
             description: "Buoyancy supports roughly 90% of total body weight when submerged, making it ideal for those with arthritis, recovering from injuries, or managing weight.\n\nPushing and pulling against water naturally engages opposing muscle groups, serving as an effective way to tone muscles without using heavy weights.",
-            image: "assets/images/mission/aqua_fitness.png",
-            badge: "Hydrotherapy"
+            image: "assets/images/mission/aqua_fitness.png"
         }
     ],
 
@@ -368,6 +364,56 @@ function renderNavigation() {
 
     // Mount nav pill to header
     header.appendChild(navPill);
+}
+
+/**
+ * Manages navigation header visibility during scrolling.
+ * Hides header when scrolling down, reappears when scrolling up or near the top.
+ */
+function initScrollHeader() {
+    const header = document.getElementById("nav-header");
+    if (!header) return;
+
+    let lastScrollY = window.scrollY || 0;
+    const scrollThreshold = 4;
+    const topThreshold = 40;
+
+    const handleScroll = (scrollPos, direction) => {
+        const currentY = Math.max(0, typeof scrollPos === 'number' ? scrollPos : (window.scrollY || 0));
+        const mobileToggle = document.getElementById("mobile-toggle");
+
+        // Do not hide navbar if mobile drawer is currently open
+        if (mobileToggle && mobileToggle.checked) {
+            header.classList.remove("nav-hidden");
+            lastScrollY = currentY;
+            return;
+        }
+
+        if (currentY <= topThreshold) {
+            header.classList.remove("nav-hidden");
+        } else {
+            const diff = currentY - lastScrollY;
+            if (direction === 1 || diff > scrollThreshold) {
+                // Scrolling down -> hide navbar
+                header.classList.add("nav-hidden");
+            } else if (direction === -1 || diff < -scrollThreshold) {
+                // Scrolling up -> show navbar
+                header.classList.remove("nav-hidden");
+            }
+        }
+
+        lastScrollY = currentY;
+    };
+
+    if (window.lenis) {
+        window.lenis.on('scroll', (e) => {
+            handleScroll(e.scroll, e.direction);
+        });
+    }
+
+    window.addEventListener('scroll', () => {
+        handleScroll(window.scrollY, undefined);
+    }, { passive: true });
 }
 
 /**
@@ -632,7 +678,7 @@ function renderFooter() {
             <img src="assets/images/misc/spotlight-image.jpeg" alt="Mollie MoveRx Mission Spotlight" class="spotlight-img">
         </div>
         <div class="spotlight-text-side">
-            <span class="spotlight-badge">Clinical Spotlight</span>
+            
             <h2 class="card-title-3d">The MoveRx Mission</h2>
             <p class="card-description-3d">
                 “MoveRx integrates functional movement, corrective exercise, and mindful coaching to support whole‑body wellness. My mission is to help clients move with ease, strength, and purpose — in the gym, at work, and throughout life.”
@@ -1102,7 +1148,7 @@ function initGalleryStack() {
 
     function startAutoPlay() {
         stopAutoPlay();
-        autoPlayInterval = setInterval(() => nextCard(), 1500);
+        autoPlayInterval = setInterval(() => nextCard(), 6500); // 6.5s stationary duration
     }
 
     function stopAutoPlay() {
@@ -1114,7 +1160,7 @@ function initGalleryStack() {
         clearTimeout(resumeTimeout);
         resumeTimeout = setTimeout(() => {
             isPaused = false;
-        }, 4000); // Wait 4 seconds after interaction to resume
+        }, 9000); // Wait 9 seconds after interaction to resume
     }
 
     startAutoPlay();
@@ -1448,11 +1494,6 @@ function renderSpecialties() {
         // Text Info Side
         const infoSide = document.createElement("div");
         infoSide.className = "specialty-info-side";
-        
-        const badge = document.createElement("span");
-        badge.className = "specialty-badge";
-        badge.textContent = spec.badge;
-        infoSide.appendChild(badge);
 
         const title = document.createElement("h3");
         title.textContent = spec.title;
@@ -1661,6 +1702,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderFooter();
 
     // 3. Bind event animations
+    initScrollHeader();
     initLeafScrollAnimation();
     initScrollStack();
     initGalleryStack();
@@ -1671,7 +1713,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const preloader = document.getElementById("preloader");
         if (preloader && !preloader.classList.contains("fade-out")) {
             const elapsed = Date.now() - loadStartTime;
-            const remainingDelay = Math.max(0, 1000 - elapsed);
+            const remainingDelay = Math.max(0, 2000 - elapsed);
             
             setTimeout(() => {
                 preloader.classList.add("fade-out");
@@ -1694,6 +1736,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     window.addEventListener("load", hidePreloader);
-    setTimeout(hidePreloader, 3500); // 3.5s safety fallback
+    setTimeout(hidePreloader, 4500); // 4.5s safety fallback
 });
  
