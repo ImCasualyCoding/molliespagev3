@@ -1038,17 +1038,11 @@ function renderGallery() {
     const stackControls = document.createElement("div");
     stackControls.className = "stack-mobile-controls";
     
-    const prevBtn = document.createElement("button");
-    prevBtn.className = "stack-btn prev-btn";
-    prevBtn.innerHTML = "&#8592;"; // Left arrow
-    prevBtn.setAttribute("aria-label", "Previous image");
-
     const nextBtn = document.createElement("button");
     nextBtn.className = "stack-btn next-btn";
     nextBtn.innerHTML = "&#8594;"; // Right arrow
     nextBtn.setAttribute("aria-label", "Next image");
 
-    stackControls.appendChild(prevBtn);
     stackControls.appendChild(nextBtn);
     stackColumn.appendChild(stackControls);
     
@@ -1165,23 +1159,13 @@ function initGalleryStack() {
 
     startAutoPlay();
 
-    // Mobile buttons binding
-    const prevBtn = document.querySelector('.stack-btn.prev-btn');
+    // Mobile button binding
     const nextBtn = document.querySelector('.stack-btn.next-btn');
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             pauseAutoPlay();
             nextCard(true);
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            pauseAutoPlay();
-            const movedIdx = cardsOrder.shift();
-            cardsOrder.push(movedIdx);
-            updateCardLayouts();
         });
     }
 
